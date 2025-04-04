@@ -1,0 +1,25 @@
+name: Deploy com Peaceiris
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Rodar testes simulados
+        run: |
+          echo "Nenhum teste implementado ainda. Adicione testes em script.js!"
+          echo "Testes simulados aprovados"
+
+      - name: Deploy no GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .  # ou dist/ se usar ferramentas de build
