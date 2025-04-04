@@ -2,36 +2,32 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 permissions:
   contents: read
   pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
+  id-token: write  # ESSENCIAL pro deploy funcionar
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do código
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Executar testes simulados
+      - name: Rodar testes simulados
         run: |
           echo "Nenhum teste implementado ainda. Adicione testes em script.js!"
-          echo "Podemos adicionar testes com Jest ou Cypress no futuro."
-          echo "Testes simulados aprovados."
+          echo "Testes simulados aprovados"
+          exit 0
 
-      - name: Fazer upload dos artefatos para o GitHub Pages
-        uses: actions/upload-pages-artifact@v3
+      - name: Upload do artifact para Pages
+        uses: actions/upload-pages-artifact@v2
         with:
-          path: . # Altere para o diretório de saída, se aplicável
+          path: .
 
   deploy:
     needs: build
@@ -39,7 +35,12 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
+    permissions:
+      pages: write
+      id-token: write
+
     steps:
-      - name: Implantar no GitHub Pages
+      - name: Deploy para GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
