@@ -1,27 +1,39 @@
-name: CI
+name: Deploy para GitHub Pages
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
 
-      - name: Executar testes
-        run: |
-          echo "Nenhum teste implementado ainda. Adicione testes em script.js!"
-          echo "Podemos adicionar testes com Jest ou Cypress no futuro."
-          echo "Testes simulados aprovados"
-          exit 0
-
-      - name: Deploy para GitHub Pages
-        if: github.ref == 'refs/heads/main'
-        uses: actions/deploy-pages@v2
+      - name: Criar artefato para GitHub Pages
+        uses: actions/upload-pages-artifact@v2
         with:
-          folder: .
+          path: . # coloque aqui o caminho para os arquivos finais (ex: dist/)
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy para GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
