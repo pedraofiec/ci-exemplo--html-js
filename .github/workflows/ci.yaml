@@ -2,43 +2,20 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
 
       - name: Executar testes simulados
         run: |
-          echo "Nenhum teste implementado ainda. Adicione testes em script.js!"
-          echo "Podemos adicionar testes com Jest ou Cypress no futuro."
-          echo "Testes simulados aprovados."
-
-      - name: Fazer upload dos artefatos para o GitHub Pages
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: . # Altere para o diretório de saída, se aplicável
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Implantar no GitHub Pages
-        id: deployment
+          echo "✅ Nenhum teste implementado ainda."
+          echo "🧪 Simulando testes com sucesso!"
+          echo "➡️ Em breve podemos usar Jest ou Cypress."
