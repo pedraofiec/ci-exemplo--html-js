@@ -11,12 +11,16 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do código
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Executar testes simulados
         run: |
@@ -25,7 +29,7 @@ jobs:
           echo "Testes simulados aprovados."
 
       - name: Fazer upload dos artefatos para o GitHub Pages
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: . # Altere para o diretório de saída, se aplicável
 
