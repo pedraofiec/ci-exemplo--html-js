@@ -11,7 +11,7 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -19,10 +19,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Criar artefato para GitHub Pages
+      - name: Simular testes
+        run: |
+          echo "Nenhum teste implementado ainda. Adicione testes em script.js!"
+          echo "Testes simulados aprovados."
+
+      - name: Upload de artefatos para GitHub Pages
         uses: actions/upload-pages-artifact@v2
         with:
-          path: . # coloque aqui o caminho para os arquivos finais (ex: dist/)
+          path: . # substitua se necessário (ex: ./dist)
 
   deploy:
     needs: build
