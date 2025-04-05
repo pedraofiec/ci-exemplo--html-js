@@ -19,6 +19,10 @@ jobs:
       - name: Checkout do repositório
         uses: actions/checkout@v3
 
+      # ⚠️ Solução temporária para o bug: adicionando upload-artifact manualmente
+      - name: Baixar a ação upload-artifact (workaround)
+        uses: actions/upload-artifact@v3
+
       - name: Executar testes simulados
         run: |
           echo "Nenhum teste implementado ainda. Adicione testes em script.js!"
@@ -29,7 +33,7 @@ jobs:
       - name: Upload de artefatos para GitHub Pages
         uses: actions/upload-pages-artifact@v2
         with:
-          path: . # Diretório que será enviado (raiz do projeto)
+          path: . # ou ./dist, se for esse o diretório gerado
 
   deploy:
     needs: build
